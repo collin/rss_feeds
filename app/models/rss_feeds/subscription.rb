@@ -13,12 +13,12 @@ module RssFeeds
     after_create :notify_subscriber_after_create
     
     def notify_subscriber_after_create
-      notify_subscriber("subscription:create", to_json)
+      notify_subscriber("/subscriptions/create", to_json)
     end
 
     def notify_subscriber(event, data)
       return unless receives_notifications?
-      private_channel.trigger_async(event, data)
+      private_channel.trigger(event, data)
     end
 
     def private_channel
@@ -27,7 +27,7 @@ module RssFeeds
     end
 
     def receives_notifications?
-      subscriber.private_channel && subscriberprivate_channel_active?
+      subscriber.respond_to?(:private_channel)
     end
   end
 end

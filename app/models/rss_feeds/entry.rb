@@ -18,7 +18,7 @@ module RssFeeds
     after_create :notify_subscribers
     
     def notify_subscribers
-      feed.notify_subscribers "entry:create", to_json
+      feed.notify_subscribers "/entries/create", to_json
     end
     
     # TODO: sanitize HTML content
