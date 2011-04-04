@@ -17,7 +17,7 @@ module RssFeeds
     validates_presence_of :canonical_id, :title, :description, :author, :link
     
     def self.discover!(feed_url)
-      feed = ::Google::Ajax::Feed.discover(feed_url)
+      feed = ::Google::Ajax::Feed.lookup(feed_url)
       
       find(:canonical_id => feed.canonical_id) || create!(
         :canonical_id => feed.canonical_id,
